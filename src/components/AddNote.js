@@ -4,18 +4,21 @@ import Note from './Note.js';
 class AddNote extends Component {
   constructor(props){
     super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  onSubmit(e){
+    e.preventDefault();
+    console.log("note added");
+    this.props.onAdd();
   }
   render() {
     return (
       <div className="add-note">
-        <input type="submit" value="Add New Note" />
+        <form onSubmit={this.onSubmit}>
+          <input type="submit" value="Add New Note" />
+        </form>
       </div>
-    );
-  }
-
-  onSubmit(e){
-    e.preventDefault();
-    this.props.onAdd();
+    )
   }
 }
 
