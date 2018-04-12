@@ -7,17 +7,26 @@ import AddNote from './components/AddNote.js'
 
 var nextId = 4;
 class App extends React.Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    this.onNoteAdd = this.onNoteAdd.bind(this);
+    this.state = {
+      notes: props.initialNotes,
+    }
   }
   onNoteAdd(){
-    this.state.notes.push({
-      title: "Title",
-      author: "Author",
-      content: "Note Note Note Note Note Note Note",
-      id: nextId
-    });
-    this.setState(this.state);
+    this.setState(function(prevState, props){
+      const newArray = prevState.notes.concat({
+        title: "Note5",
+        author: "Jon",
+        content: "Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
+        key:nextId
+      })
+      console.log(newArray);
+      return{
+        notes: newArray,
+      }
+    })
     nextId++;
   }
   render(){
@@ -26,7 +35,7 @@ class App extends React.Component {
         <div className='container'>
           <div className='note-area'>
             <SearchBar />
-            <NoteList notes={this.props.initialNotes}/>
+            <NoteList notes={this.state.notes}/>
             <AddNote onAdd={this.onNoteAdd} />
           </div>
           <NoteView />

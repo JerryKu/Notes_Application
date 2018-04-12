@@ -10,9 +10,8 @@ class NoteList extends Component {
     return (
       <div className="note-list">
         {this.props.notes.map(function(note){
-          return <Note title={note.title} content ={note.content} author={note.author}/>
-        })}
-      <AddNote />
+          return <Note title={note.title} content ={note.content} author={note.author} key={note.key}/>
+        }.bind(this))}
       </div>
     );
   }
