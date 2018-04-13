@@ -25,9 +25,9 @@ class SearchBar extends Component {
     <div className='search-bar'>
       <form onSubmit={this.onSubmit}>
         <input type="text" value={this.state.searchPhrase} placeholder="Search..." onChange={(e)=> {this.handleSearchUpdate(e)}}/>
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Search"/>
       </form>
-      <button type="submit" onClick={this.props.cancelSearch} value="Cancel Search"/>
+      <button type="submit" onClick={this.props.cancelSearch} value="Cancel Search">Cancel Search</button>
     </div>
   )
   }

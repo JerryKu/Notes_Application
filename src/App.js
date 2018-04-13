@@ -51,7 +51,7 @@ class App extends React.Component {
       prevState.notes.splice(index,1)
       return{
         notes: prevState.notes,
-        display: this.state.notes,
+        display: this.state.notes
       }
     })
   }
@@ -79,12 +79,11 @@ class App extends React.Component {
         display: searchArray,
       })
     }
-    cancelSearch(){
-      console.log("cancel");
-      this.setState({
-        display: this.state.notes,
-      })
-    }
+  cancelSearch(){
+    this.setState({
+      display: this.state.notes,
+    })
+  }
   render(){
     return(
       <div className='application'>
