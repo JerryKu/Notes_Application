@@ -1,14 +1,33 @@
 import React, { Component } from 'react';
 
 class SearchBar extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    this.onSubmit=this.onSubmit.bind(this);
+    this.state={
+      searchPhrase: "",
+    }
+  }
+  handleSearchUpdate(evt){
+    this.setState({
+      searchPhrase: evt.target.value,
+    })
+  }
+  onSubmit(e){
+    e.preventDefault();
+    this.props.onNoteSearch(this.state.searchPhrase);
+    this.setState({
+      searchPhrase: "",
+    })
   }
   render(){
     return (
     <div className='search-bar'>
-      <input type="text" placeholder="Search..."/>
-      <input type="submit" value="Submit"/>
+      <form onSubmit={this.onSubmit}>
+        <input type="text" value={this.state.searchPhrase} placeholder="Search..." onChange={(e)=> {this.handleSearchUpdate(e)}}/>
+        <input type="submit" value="Submit"/>
+      </form>
+      <button type="submit" onClick={this.props.cancelSearch} value="Cancel Search"/>
     </div>
   )
   }

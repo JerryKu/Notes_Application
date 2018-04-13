@@ -13,22 +13,27 @@ class App extends React.Component {
     this.onNoteClick = this.onNoteClick.bind(this);
     this.onNoteDelete = this.onNoteDelete.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
+    this.onNoteSearch = this.onNoteSearch.bind(this);
+    this.cancelSearch = this.cancelSearch.bind(this);
     this.state = {
       notes: props.initialNotes,
+      display: props.initialNotes,
       currentNote: props.initialNotes[0],
+
     }
   }
-  onNoteAdd(){
+  onNoteAdd(username, title){
     this.setState(function(prevState, props){
       const newArray = prevState.notes.concat({
-        title: "Note5",
-        author: "Andrew",
-        content: "Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
+        title: title,
+        author: username,
+        content: "",
         key:nextId
       })
       console.log(newArray);
       return{
         notes: newArray,
+        display: newArray
       }
     })
     nextId++;
@@ -46,6 +51,7 @@ class App extends React.Component {
       prevState.notes.splice(index,1)
       return{
         notes: prevState.notes,
+        display: this.state.notes,
       }
     })
   }
@@ -60,13 +66,32 @@ class App extends React.Component {
 
     )
   }
+  onNoteSearch(input){
+    console.log(input);
+    const searchArray = this.state.notes.filter(
+      function(note){
+        //console.log(note.content.indexOf(input));
+          return note.content.indexOf(input) > -1;
+      }
+    )
+    console.log(searchArray)
+    this.setState({
+        display: searchArray,
+      })
+    }
+    cancelSearch(){
+      console.log("cancel");
+      this.setState({
+        display: this.state.notes,
+      })
+    }
   render(){
     return(
       <div className='application'>
         <div className='container'>
           <div className='note-area'>
-            <SearchBar />
-            <NoteList notes={this.state.notes} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
+            <SearchBar onNoteSearch={this.onNoteSearch} cancelSearch={this.cancelSearch}/>
+            <NoteList notes={this.state.display} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
             <AddNote onAdd={this.onNoteAdd} />
           </div>
           <NoteView currentNote={this.state.currentNote} onNoteChange={this.onNoteChange}/>

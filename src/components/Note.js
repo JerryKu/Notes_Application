@@ -12,8 +12,7 @@ class Note extends Component {
          -
         &nbsp;
         <span>{this.props.author}</span>
-        <span onClick={this.props.onDelete} className="delete">delete</span>
-        <span className="edit">edit</span>
+        <span onClick={this.props.onDelete} className="delete">X</span>
       </div>
     );
   }
