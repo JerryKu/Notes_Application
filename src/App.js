@@ -12,6 +12,7 @@ class App extends React.Component {
     this.onNoteAdd = this.onNoteAdd.bind(this);
     this.onNoteClick = this.onNoteClick.bind(this);
     this.onNoteDelete = this.onNoteDelete.bind(this);
+    this.onNoteChange = this.onNoteChange.bind(this);
     this.state = {
       notes: props.initialNotes,
       currentNote: props.initialNotes[0],
@@ -37,7 +38,7 @@ class App extends React.Component {
       return{
         currentNote: note
       }
-    }.bind(this))
+    })
   }
   onNoteDelete(index){
     console.log(index);
@@ -48,6 +49,17 @@ class App extends React.Component {
       }
     })
   }
+  onNoteChange(event){
+    const update = event.target.value;
+    this.setState(function(prevState, props){
+      prevState.currentNote.content = update;
+      return {
+        currentNote: prevState.currentNote,
+      }
+    }
+
+    )
+  }
   render(){
     return(
       <div className='application'>
@@ -57,7 +69,7 @@ class App extends React.Component {
             <NoteList notes={this.state.notes} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
             <AddNote onAdd={this.onNoteAdd} />
           </div>
-          <NoteView currentNote={this.state.currentNote}/>
+          <NoteView currentNote={this.state.currentNote} onNoteChange={this.onNoteChange}/>
         </div>
       </div>
       )
