@@ -22,12 +22,12 @@ class SearchBar extends Component {
   }
   render(){
     return (
-    <div className='search-bar'>
-      <form onSubmit={this.onSubmit}>
+    <div className="search-bar">
+      <form className="search-form" onSubmit={this.onSubmit}>
         <input type="text" value={this.state.searchPhrase} placeholder="Search..." onChange={(e)=> {this.handleSearchUpdate(e)}}/>
         <input type="submit" value="Search"/>
       </form>
-      <button type="submit" onClick={this.props.cancelSearch} value="Cancel Search">Cancel Search</button>
+      <button className="cancel-search" type="submit" onClick={this.props.cancelSearch} value="Cancel Search">Cancel Search</button>
     </div>
   )
   }

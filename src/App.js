@@ -17,23 +17,23 @@ class App extends React.Component {
     this.cancelSearch = this.cancelSearch.bind(this);
     this.state = {
       notes: props.initialNotes,
-      display: props.initialNotes,
-      currentNote: props.initialNotes[0],
+      displayedNotes: props.initialNotes,
+      currentNote: {},
 
     }
   }
-  onNoteAdd(username, title){
+  onNoteAdd(username, title, textValue){
     this.setState(function(prevState, props){
       const newArray = prevState.notes.concat({
         title: title,
         author: username,
-        content: "",
+        content: textValue,
         key:nextId
       })
       console.log(newArray);
       return{
         notes: newArray,
-        display: newArray
+        displayedNotes: newArray
       }
     })
     nextId++;
@@ -46,12 +46,11 @@ class App extends React.Component {
     })
   }
   onNoteDelete(index){
-    console.log(index);
     this.setState(function(prevState, props){
       prevState.notes.splice(index,1)
       return{
         notes: prevState.notes,
-        display: this.state.notes
+        displayedNotes: this.state.notes
       }
     })
   }
@@ -76,12 +75,12 @@ class App extends React.Component {
     )
     console.log(searchArray)
     this.setState({
-        display: searchArray,
+        displayedNotes: searchArray,
       })
     }
   cancelSearch(){
     this.setState({
-      display: this.state.notes,
+      displayedNotes: this.state.notes,
     })
   }
   render(){
@@ -90,7 +89,7 @@ class App extends React.Component {
         <div className='container'>
           <div className='note-area'>
             <SearchBar onNoteSearch={this.onNoteSearch} cancelSearch={this.cancelSearch}/>
-            <NoteList notes={this.state.display} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
+            <NoteList notes={this.state.displayedNotes} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
             <AddNote onAdd={this.onNoteAdd} />
           </div>
           <NoteView currentNote={this.state.currentNote} onNoteChange={this.onNoteChange}/>
