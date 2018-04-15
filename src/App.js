@@ -45,12 +45,25 @@ class App extends React.Component {
       }
     })
   }
-  onNoteDelete(index){
+  //Note Delete Function passed down to NoteList passed down to Note
+  onNoteDelete(index, evt){
+    //stopPropagation to stop Note's onClick handler
+    evt.stopPropagation()
+    let currentNote = this.state.currentNote;
+    if(this.state.currentNote.key === this.state.notes[index].key){
+      currentNote = {
+        title: "",
+        author: "",
+        content: "",
+        key: ""
+      }
+    }
     this.setState(function(prevState, props){
       prevState.notes.splice(index,1)
       return{
         notes: prevState.notes,
-        displayedNotes: this.state.notes
+        displayedNotes: this.state.notes,
+        currentNote: currentNote
       }
     })
   }

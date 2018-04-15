@@ -10,7 +10,7 @@ class NoteList extends Component {
     return (
       <div className="note-list">
         {this.props.notes.map(function(note, index){
-          return <div onClick={(e) => {this.props.onNoteClick(note)}}><Note title={note.title} content ={note.content} author={note.author} key={note.key} onDelete={(e) => {this.props.onNoteDelete(index)}}/></div>
+          return <div onClick={(e) => {this.props.onNoteClick(note)}}><Note title={note.title} content ={note.content} author={note.author} key={note.key} onDelete={(e) => {this.props.onNoteDelete(index, e)}}/></div>
         }.bind(this))}
       </div>
     );
