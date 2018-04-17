@@ -56,8 +56,8 @@ class AddNote extends Component {
     return (
       <div className="add-note">
           <form onSubmit={this.onSubmit}>
-            <input type="text" placeholder="username" value={this.state.username} onChange={(e)=>{this.handleNameUpdate(e)}}/>
-            <input type="text" placeholder="title" value={this.state.title} onChange={(e)=>{this.handleTitleUpdate(e)}}/>
+            <input type="text" placeholder="Name" value={this.state.username} onChange={(e)=>{this.handleNameUpdate(e)}}/>
+            <input type="text" placeholder="Title" value={this.state.title} onChange={(e)=>{this.handleTitleUpdate(e)}}/>
             <select value={this.state.selectedTopic} onChange={(e)=>this.handleTopicUpdate(e)}>
               {this.props.topics.map(function(topic,index){
                 return <option value={topic}>{topic}</option>

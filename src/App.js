@@ -58,7 +58,6 @@ class App extends React.Component {
         topic: selectedTopic,
         key:nextId
       })
-      console.log(newArray);
       return{
         notes: newArray,
         displayedNotes: newArray
@@ -110,7 +109,7 @@ class App extends React.Component {
     const searchArray = this.state.notes.filter(
       function(note){
         //console.log(note.content.indexOf(input));
-          return note.content.indexOf(input) > -1;
+          return note.content.toLowerCase().indexOf(input.toLowerCase()) > -1;
       }
     )
     this.setState({

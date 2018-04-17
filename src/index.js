@@ -4,42 +4,42 @@ import './index.css';
 import App from './App';
 
 const TOPICS = [
-  "All", "Math", "Science", "English", "Misc."
+  "All", "Hash Tables", "Arrays", "Linked Lists", "Misc."
 ]
 const NOTES = [
   {
-    title: "Note1",
+    title: "What is a Hash table",
     author: "Jerry",
-    content: "Note1 Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
-    topic: "Math",
+    content: "In computing, a hash table (hash map) is a data structure which implements an associative array abstract data type, a structure that can map keys to values.",
+    topic: "Hash Tables",
     key: 0
   },
   {
-    title: "Note2",
-    author: "Serena",
-    content: "Note2 Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
-    topic: "Science",
+    title: "How do Hash tables work?",
+    author: "Jerry",
+    content: "A hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.",
+    topic: "Hash Tables",
     key: 1
   },
   {
-    title: "Note3",
+    title: "What is an Array?",
     author: "Brandon",
-    content: "Note3 Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
-    topic: "English",
+    content: "An array is a data structure, which can store a fixed-size collection of elements of the same data type. An array is used to store a collection of data, but it is often more useful to think of an array as a collection of variables of the same type.",
+    topic: "Arrays",
     key: 2
   },
   {
-    title: "Note4",
-    author: "Jon",
-    content: "Note4 Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
-    topic: "Misc.",
+    title: "What is a Linked List?",
+    author: "Andrew",
+    content: "In computer science, a linked list is a linear collection of data elements, in which linear order is not given by their physical placement in memory. Instead, each element points to the next.",
+    topic: "Linked Lists",
     key: 3
   },
   {
-    title: "Note5",
-    author: "Jon2",
-    content: "Note5 Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note Note",
-    topic: "Misc.",
+    title: "More on Linked Lists",
+    author: "Andrew",
+    content: "Linked lists are among the simplest and most common data structures. They can be used to implement several other common abstract data types, including lists, stacks, queues, associative arrays.",
+    topic: "Linked Lists",
     key: 4
   }
 ]

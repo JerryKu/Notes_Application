@@ -9,8 +9,7 @@ class Topics extends Component {
       <div>
         Topics:
         {this.props.topics.map(function(topic, index){
-          console.log(topic);
-          return <div className="topics" onClick={(e)=>this.props.onTopicSelect(topic)}>{topic}</div>
+          return <div className="topics" onClick={(e)=>{this.props.onTopicSelect(topic)}}>{topic}</div>
         }.bind(this))
         }
         <AddTopic onAddTopic={this.props.onAddTopic}/>
