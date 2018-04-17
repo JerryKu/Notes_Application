@@ -16,7 +16,7 @@ class AddNote extends Component {
     e.preventDefault();
     if(this.state.username !== "" && this.state.title !== "" && this.state.textValue !== ""){
       console.log("note added");
-      this.props.onAdd(this.state.username, this.state.title, this.state.textValue);
+      this.props.onAdd(this.state.username, this.state.title, this.state.textValue, this.state.selectedTopic);
       this.setState({
         username: "",
         title: "",
@@ -47,20 +47,24 @@ class AddNote extends Component {
       textValue: evt.target.value
     })
   }
+  handleTopicUpdate(evt){
+    this.setState({
+      selectedTopic: evt.target.value
+    })
+  }
   render() {
     return (
       <div className="add-note">
           <form onSubmit={this.onSubmit}>
             <input type="text" placeholder="username" value={this.state.username} onChange={(e)=>{this.handleNameUpdate(e)}}/>
             <input type="text" placeholder="title" value={this.state.title} onChange={(e)=>{this.handleTitleUpdate(e)}}/>
-            <select>
-              <option>Topic</option>
+            <select value={this.state.selectedTopic} onChange={(e)=>this.handleTopicUpdate(e)}>
               {this.props.topics.map(function(topic,index){
                 return <option value={topic}>{topic}</option>
               })}
 
             </select>
-            <textarea rows='10' cols='100' value={this.state.textValue} onChange={(e)=>{this.handleTextUpdate(e)}}/>
+            <textarea value={this.state.textValue} onChange={(e)=>{this.handleTextUpdate(e)}}/>
             <input type="submit" value="Add New Note" />
           </form>
       </div>

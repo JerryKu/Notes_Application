@@ -13,7 +13,7 @@ class Topics extends Component {
           return <div className="topics" onClick={(e)=>this.props.onTopicSelect(topic)}>{topic}</div>
         }.bind(this))
         }
-        <AddTopic />
+        <AddTopic onAddTopic={this.props.onAddTopic}/>
     </div>
     );
   }

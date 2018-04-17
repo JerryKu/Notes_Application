@@ -43,18 +43,19 @@ class App extends React.Component {
   }
   onAddTopic(topic){
     this.setState(function(prevState, props){
-      const newTopics = prevState.topics.push(topic);
+      const newTopics = prevState.topics.concat(topic);
       return {
         topics: newTopics,
       }
     })
   }
-  onNoteAdd(username, title, textValue){
+  onNoteAdd(username, title, textValue, selectedTopic){
     this.setState(function(prevState, props){
       const newArray = prevState.notes.concat({
         title: title,
         author: username,
         content: textValue,
+        topic: selectedTopic,
         key:nextId
       })
       console.log(newArray);
