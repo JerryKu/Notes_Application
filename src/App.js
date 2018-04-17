@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from './components/SearchBar.js';
 import NoteList from './components/NoteList.js';
-import styles from './App.css';
+import './App.css';
 import NoteView from './components/NoteView.js'
 import AddNote from './components/AddNote.js'
 
@@ -15,12 +15,18 @@ class App extends React.Component {
     this.onNoteChange = this.onNoteChange.bind(this);
     this.onNoteSearch = this.onNoteSearch.bind(this);
     this.cancelSearch = this.cancelSearch.bind(this);
+
     this.state = {
       notes: props.initialNotes,
       displayedNotes: props.initialNotes,
       currentNote: {},
 
     }
+  }
+  onTopicSelect(topic){
+    this.setState(function(prevState, props){
+      const topicArray = this.state.notes
+    })
   }
   onNoteAdd(username, title, textValue){
     this.setState(function(prevState, props){

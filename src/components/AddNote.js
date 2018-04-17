@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Note from './Note.js';
 
 
 class AddNote extends Component {
@@ -14,18 +13,21 @@ class AddNote extends Component {
   }
   onSubmit(e){
     e.preventDefault();
-    console.log("user", this.state.username ==="")
-    console.log("title", this.state.title ==="")
-    console.log("text", this.state.textValue==="")
-    if(!this.state.username== "" && !this.state.title== "" && !this.state.textValue== ""){
+    if(this.state.username !== "" && this.state.title !== "" && this.state.textValue !== ""){
       console.log("note added");
       this.props.onAdd(this.state.username, this.state.title, this.state.textValue);
+      this.setState({
+        username: "",
+        title: "",
+        textValue: ""
+      });
+    }else{
+      this.setState({
+        username: "",
+        title: "",
+        textValue: "Please fill in all fields."
+      })
     }
-    this.setState({
-      username: "",
-      title: "",
-      textValue: ""
-    })
   }
   handleNameUpdate(evt){
     this.setState({

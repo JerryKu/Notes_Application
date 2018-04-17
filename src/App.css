@@ -1,6 +1,9 @@
 .search-form{
   display:inline;
 }
+.delete{
+  cursor: pointer;
+}
 *{
   box-sizing: border-box;
 }
