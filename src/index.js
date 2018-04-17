@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+
+const TOPICS = [
+  "All", "Math", "Science", "English", "Misc."
+]
 const NOTES = [
   {
     title: "Note1",
@@ -40,4 +44,4 @@ const NOTES = [
   }
 ]
 
-ReactDOM.render(<App initialNotes ={NOTES}/>, document.getElementById('root'));
+ReactDOM.render(<App initialNotes ={NOTES} initialTopics = {TOPICS}/>, document.getElementById('root'));

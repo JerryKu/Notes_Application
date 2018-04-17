@@ -4,11 +4,11 @@ class NoteView extends Component {
 
   render() {
     return (
-      <div className="note-view">
+      <div>
         {this.props.currentNote.title}
         <br/>
         <br/>
-        <div><textarea rows='10' cols='100' name="content" className="note-content" value={this.props.currentNote.content} onChange={(e)=>{this.props.onNoteChange(e)}}/></div>
+        <div><textarea name="content" className="note-content" value={this.props.currentNote.content} onChange={(e)=>{this.props.onNoteChange(e)}}/></div>
       </div>
     );
   }

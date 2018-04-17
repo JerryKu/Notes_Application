@@ -9,6 +9,7 @@ class AddNote extends Component {
       username: "",
       title: "",
       textValue: "",
+      selectedTopic: "All"
     }
   }
   onSubmit(e){
@@ -52,6 +53,13 @@ class AddNote extends Component {
           <form onSubmit={this.onSubmit}>
             <input type="text" placeholder="username" value={this.state.username} onChange={(e)=>{this.handleNameUpdate(e)}}/>
             <input type="text" placeholder="title" value={this.state.title} onChange={(e)=>{this.handleTitleUpdate(e)}}/>
+            <select>
+              <option>Topic</option>
+              {this.props.topics.map(function(topic,index){
+                return <option value={topic}>{topic}</option>
+              })}
+
+            </select>
             <textarea rows='10' cols='100' value={this.state.textValue} onChange={(e)=>{this.handleTextUpdate(e)}}/>
             <input type="submit" value="Add New Note" />
           </form>

@@ -1,3 +1,9 @@
+textarea{
+  margin: 2%;
+  resize: none;
+  height: 100px;
+  width: 96%;
+}
 .search-form{
   display:inline;
 }
@@ -11,23 +17,29 @@
   border:1px solid black;
   padding: 1%;
 }
+.topics-area{
+  vertical-align: top;
+  width:10%;
+  border: 1px solid black;
+  display:inline-block;
+  height:500px;
+}
 .container{
   margin:0 auto;
   width:80%;
 }
 .note-area {
   display:inline-block;
-  width:50%;
+  width:45%;
   border: 1px solid black;
   height:500px;
 }
 .note-view{
   border: 1px solid black;
   vertical-align: top;
-  max-width:50%;
+  width:45%;
   height: 500px;
   display: inline-block;
-  width: auto;
 }
 .edit,.delete{
   border-left: 1px solid black;

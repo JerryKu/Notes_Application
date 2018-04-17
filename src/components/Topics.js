@@ -1,0 +1,23 @@
+import React, { Component } from 'react';
+import AddTopic from './AddTopic.js'
+class Topics extends Component {
+  constructor(props){
+    super(props)
+  }
+  render() {
+    return (
+      <div>
+        Topics:
+        {this.props.topics.map(function(topic, index){
+          console.log(topic);
+          return <div className="topics" onClick={(e)=>this.props.onTopicSelect(topic)}>{topic}</div>
+        }.bind(this))
+        }
+        <AddTopic />
+    </div>
+    );
+  }
+
+}
+
+export default Topics;

@@ -4,6 +4,7 @@ import NoteList from './components/NoteList.js';
 import './App.css';
 import NoteView from './components/NoteView.js'
 import AddNote from './components/AddNote.js'
+import Topics from './components/Topics.js'
 
 var nextId = 4;
 class App extends React.Component {
@@ -15,17 +16,37 @@ class App extends React.Component {
     this.onNoteChange = this.onNoteChange.bind(this);
     this.onNoteSearch = this.onNoteSearch.bind(this);
     this.cancelSearch = this.cancelSearch.bind(this);
+    this.onTopicSelect = this.onTopicSelect.bind(this);
+    this.onAddTopic = this.onAddTopic.bind(this);
 
     this.state = {
       notes: props.initialNotes,
       displayedNotes: props.initialNotes,
+      topics: props.initialTopics,
       currentNote: {},
 
     }
   }
   onTopicSelect(topic){
+    let topicArray = this.state.notes;
+    if(topic !== "All"){
+      topicArray = this.state.notes.filter(
+        function(note){
+          //console.log(note.content.indexOf(input));
+            return note.topic === topic;
+        }
+      )
+    }
+    this.setState({
+      displayedNotes: topicArray,
+    })
+  }
+  onAddTopic(topic){
     this.setState(function(prevState, props){
-      const topicArray = this.state.notes
+      const newTopics = prevState.topics.push(topic);
+      return {
+        topics: newTopics,
+      }
     })
   }
   onNoteAdd(username, title, textValue){
@@ -85,14 +106,12 @@ class App extends React.Component {
     )
   }
   onNoteSearch(input){
-    console.log(input);
     const searchArray = this.state.notes.filter(
       function(note){
         //console.log(note.content.indexOf(input));
           return note.content.indexOf(input) > -1;
       }
     )
-    console.log(searchArray)
     this.setState({
         displayedNotes: searchArray,
       })
@@ -106,12 +125,17 @@ class App extends React.Component {
     return(
       <div className='application'>
         <div className='container'>
+          <div className="topics-area">
+            <Topics topics = {this.state.topics} onTopicSelect={this.onTopicSelect} onAddTopic ={this.onAddTopic}/>
+          </div>
           <div className='note-area'>
             <SearchBar onNoteSearch={this.onNoteSearch} cancelSearch={this.cancelSearch}/>
             <NoteList notes={this.state.displayedNotes} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
-            <AddNote onAdd={this.onNoteAdd} />
+            <AddNote onAdd={this.onNoteAdd} topics={this.state.topics}/>
           </div>
-          <NoteView currentNote={this.state.currentNote} onNoteChange={this.onNoteChange}/>
+          <div className="note-view">
+            <NoteView currentNote={this.state.currentNote} onNoteChange={this.onNoteChange}/>
+          </div>
         </div>
       </div>
       )
