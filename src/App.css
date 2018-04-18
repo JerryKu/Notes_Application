@@ -4,6 +4,20 @@ textarea{
   height: 100px;
   width: 96%;
 }
+.note-title{
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.topics{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom:1px solid black;
+  padding-left: 3px;
+}
+.topic-header{
+  padding-left: 3px;
+  border-bottom: 1px solid black;
+}
 .search-form{
   display:inline;
 }

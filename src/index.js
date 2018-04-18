@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
+//Preload Topics and Notes later to be stored in LocalStorage or DB
 const TOPICS = [
   "All", "Hash Tables", "Arrays", "Linked Lists", "Misc."
 ]
@@ -44,4 +45,5 @@ const NOTES = [
   }
 ]
 
+//Pass Notes and Topic into Application. Keeping data layer high up in tree.
 ReactDOM.render(<App initialNotes ={NOTES} initialTopics = {TOPICS}/>, document.getElementById('root'));

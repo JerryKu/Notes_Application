@@ -6,10 +6,12 @@ import NoteView from './components/NoteView.js'
 import AddNote from './components/AddNote.js'
 import Topics from './components/Topics.js'
 
-var nextId = 4;
+//unique Key for note elements
+var nextId = 5;
 class App extends React.Component {
   constructor(props){
     super(props);
+    //functions are passed around to different components, need to bind this.
     this.onNoteAdd = this.onNoteAdd.bind(this);
     this.onNoteClick = this.onNoteClick.bind(this);
     this.onNoteDelete = this.onNoteDelete.bind(this);
@@ -18,7 +20,7 @@ class App extends React.Component {
     this.cancelSearch = this.cancelSearch.bind(this);
     this.onTopicSelect = this.onTopicSelect.bind(this);
     this.onAddTopic = this.onAddTopic.bind(this);
-
+    //initial state of application altered by setState()
     this.state = {
       notes: props.initialNotes,
       displayedNotes: props.initialNotes,
@@ -27,12 +29,12 @@ class App extends React.Component {
 
     }
   }
+  //Clicking a topic displays all notes from a certain topic.
   onTopicSelect(topic){
     let topicArray = this.state.notes;
     if(topic !== "All"){
       topicArray = this.state.notes.filter(
         function(note){
-          //console.log(note.content.indexOf(input));
             return note.topic === topic;
         }
       )
@@ -41,14 +43,18 @@ class App extends React.Component {
       displayedNotes: topicArray,
     })
   }
+  //Create new topic.
   onAddTopic(topic){
-    this.setState(function(prevState, props){
-      const newTopics = prevState.topics.concat(topic);
-      return {
-        topics: newTopics,
-      }
-    })
+    if(this.state.topics.indexOf(topic) === -1){
+      this.setState(function(prevState, props){
+        const newTopics = prevState.topics.concat(topic);
+        return {
+          topics: newTopics,
+        }
+      })
+    }
   }
+  //Create a new note given title, user, and topic.
   onNoteAdd(username, title, textValue, selectedTopic){
     this.setState(function(prevState, props){
       const newArray = prevState.notes.concat({
@@ -65,6 +71,7 @@ class App extends React.Component {
     })
     nextId++;
   }
+  //Display Note clicked on right side.
   onNoteClick(note){
     this.setState(function(prevState, props){
       return{
@@ -94,6 +101,7 @@ class App extends React.Component {
       }
     })
   }
+  //Handles when notes are editted in the Note View.
   onNoteChange(event){
     const update = event.target.value;
     this.setState(function(prevState, props){
@@ -101,26 +109,26 @@ class App extends React.Component {
       return {
         currentNote: prevState.currentNote,
       }
-    }
-
-    )
+    })
   }
+  //searches for words in the notes contents and displayed all notes with given word.
   onNoteSearch(input){
     const searchArray = this.state.notes.filter(
       function(note){
-        //console.log(note.content.indexOf(input));
           return note.content.toLowerCase().indexOf(input.toLowerCase()) > -1;
       }
     )
     this.setState({
         displayedNotes: searchArray,
       })
-    }
+  }
+  //Used to cancel search and display all notes
   cancelSearch(){
     this.setState({
       displayedNotes: this.state.notes,
     })
   }
+  
   render(){
     return(
       <div className='application'>

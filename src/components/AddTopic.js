@@ -17,6 +17,9 @@ class AddTopic extends Component {
   onSubmit(e){
     e.preventDefault();
     this.props.onAddTopic(this.state.topic);
+    this.setState({
+      topic: "",
+    })
   }
   render() {
     return (

@@ -9,7 +9,7 @@ class AddNote extends Component {
       username: "",
       title: "",
       textValue: "",
-      selectedTopic: "All"
+      selectedTopic: "Topics"
     }
   }
   onSubmit(e){
@@ -20,12 +20,11 @@ class AddNote extends Component {
       this.setState({
         username: "",
         title: "",
-        textValue: ""
+        textValue: "",
+        selectedTopic: "Topics"
       });
     }else{
       this.setState({
-        username: "",
-        title: "",
         textValue: "Please fill in all fields."
       })
     }
@@ -59,10 +58,10 @@ class AddNote extends Component {
             <input type="text" placeholder="Name" value={this.state.username} onChange={(e)=>{this.handleNameUpdate(e)}}/>
             <input type="text" placeholder="Title" value={this.state.title} onChange={(e)=>{this.handleTitleUpdate(e)}}/>
             <select value={this.state.selectedTopic} onChange={(e)=>this.handleTopicUpdate(e)}>
+              <option>Topics</option>
               {this.props.topics.map(function(topic,index){
-                return <option value={topic}>{topic}</option>
+                return <option key={index} value={topic}>{topic}</option>
               })}
-
             </select>
             <textarea value={this.state.textValue} onChange={(e)=>{this.handleTextUpdate(e)}}/>
             <input type="submit" value="Add New Note" />
