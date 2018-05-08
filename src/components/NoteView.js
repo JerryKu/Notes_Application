@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 
 class NoteView extends Component {
-  constructor(props){
-    super(props);
-    // this.state = {
-    //   noteDisplayed: this.props.noteDisplayed
-    // }
-  }
+
   render() {
     const updateButton = this.props.noteDisplayed ? (<div className="update-button"><button onClick={(e)=>{this.props.onNoteUpdate(this.props.currentNote._id)}}>Update</button></div>) : (<div></div>)
     return (

@@ -25,7 +25,7 @@ class AddTopic extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <input type="text" placeholder="New Topic" value={this.state.topic} onChange={this.handleChange}/>
+          <input className="add-topic" type="text" placeholder="New Topic" value={this.state.topic} onChange={this.handleChange}/>
           <input type="submit" value="Add Topic"/>
         </form>
       </div>

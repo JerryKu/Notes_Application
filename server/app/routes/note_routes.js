@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 module.exports = function(app, db){
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
+  //GET notes
   app.get('/notes', (req, res)=>{
     db.collection('notes').find({}).toArray(function(err, result) {
       if(err){
@@ -13,6 +14,7 @@ module.exports = function(app, db){
       }
     })
   })
+  //GET note by ID (currently unused)
   app.get('/notes/:id', (req, res) =>{
     const id = req.params.id;
     const details = {'_id': new ObjectID(id) };
@@ -24,7 +26,7 @@ module.exports = function(app, db){
       }
     })
   });
-
+  //DELETE note by ID
   app.delete('/notes/:id', (req, res) =>{
     const id = req.params.id;
     const details = {'_id': new ObjectID(id) };
@@ -36,6 +38,7 @@ module.exports = function(app, db){
       }
     })
   });
+  //UPDATE note by ID
   app.put('/notes/:id', (req, res)=>{
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
@@ -48,6 +51,7 @@ module.exports = function(app, db){
       };
     });
   });
+  //CREATE note
   app.post('/notes', (req, res) => {
     const note = {title: req.body.title, author: req.body.author, content: req.body.content, topic: req.body.topic, key: req.body.key};
     db.collection('notes').insert(note, (err, result)=> {
@@ -58,6 +62,7 @@ module.exports = function(app, db){
       }
     })
   })
+  //GET topics
   app.get('/topics', (req, res)=>{
     db.collection('topics').find({}).toArray(function(err, result) {
       if(err){
@@ -67,6 +72,7 @@ module.exports = function(app, db){
       }
     })
   })
+  //CREATE topic
   app.post('/topics', (req, res) => {
     console.log(req)
     const topic = {topic: req.body.topic};

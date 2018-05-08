@@ -8,7 +8,6 @@ import AddNote from './components/AddNote.js'
 import Topics from './components/Topics.js'
 
 //unique Key for note elements
-var nextId = 5;
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -31,6 +30,8 @@ class App extends React.Component {
       noteDisplayed: false,
     }
   }
+  //on app creation, will get notes and topics from the database
+  //using axios to send HTTP requests
   componentDidMount(){
     axios.get('http://localhost:8000/notes')
     .then((response)=> {
@@ -56,13 +57,11 @@ class App extends React.Component {
   //Clicking a topic displays all notes from a certain topic.
   onTopicSelect(topic){
     let topicArray = this.state.notes;
-    if(topic !== "All"){
-      topicArray = this.state.notes.filter(
-        function(note){
-            return note.topic === topic;
-        }
-      )
-    }
+    topicArray = this.state.notes.filter(
+      function(note){
+          return note.topic === topic;
+      }
+    )
     this.setState({
       noteList: topicArray,
     })
@@ -84,14 +83,15 @@ class App extends React.Component {
       })
     }
   }
-  //Create a new note given title, user, and topic.
-  onNoteAdd(username, title, textValue, selectedTopic){
+  //Create a new note given title, author, and topic.
+  onNoteAdd(author, title, textValue, selectedTopic){
     axios.post('http://localhost:8000/notes', {
-      author: username,
+      author: author,
       title: title,
       content: textValue,
       topic: selectedTopic
     }).then(()=>{
+      //if note added Successfully get all notes from database
       axios.get('http://localhost:8000/notes')
       .then((response)=> {
         this.setState(
@@ -113,6 +113,8 @@ class App extends React.Component {
         noteDisplayed: true,
     })
   }
+  //update button will appear when selecting note from list
+  //Will update content on database to currentNote's content
   onNoteUpdate(note_id){
     console.log("update!")
     let body = {
@@ -163,7 +165,6 @@ class App extends React.Component {
     .catch((err)=>{
       alert("something went wrong");
     })
-
   }
   //Handles when notes are editted in the Note View.
   onNoteChange(event){
