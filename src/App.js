@@ -24,24 +24,24 @@ class App extends React.Component {
     //initial state of application altered by setState()
     this.state = {
       notes: [],
-      displayedNotes: [],
+      noteList: [],
       topics: [],
       currentNote: {},
-
+      noteDisplayed: false,
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:8000/notes', {port: 8000})
+    axios.get('http://localhost:8000/notes')
     .then((response)=> {
       this.setState(
       {
         notes: response.data,
-        displayedNotes: response.data
+        noteList: response.data
       }
     )})
     .catch((err)=>console.log(err));
 
-    axios.get('http://localhost:8000/topics', {port: 8000})
+    axios.get('http://localhost:8000/topics')
     .then((response)=>{
       let topicArray = [];
       response.data.forEach((topic)=>{
@@ -63,7 +63,7 @@ class App extends React.Component {
       )
     }
     this.setState({
-      displayedNotes: topicArray,
+      noteList: topicArray,
     })
   }
   //Create new topic.
@@ -90,19 +90,16 @@ class App extends React.Component {
       title: title,
       content: textValue,
       topic: selectedTopic
-    }).then((response)=>{
-      this.setState(function(prevState, props){
-        const newArray = prevState.notes.concat({
-          title: title,
-          author: username,
-          content: textValue,
-          topic: selectedTopic
-        })
-        return{
-          notes: newArray,
-          displayedNotes: newArray
+    }).then(()=>{
+      axios.get('http://localhost:8000/notes')
+      .then((response)=> {
+        this.setState(
+        {
+          notes: response.data,
+          noteList: response.data
         }
-      })
+      )})
+      .catch((err)=>console.log(err));
     }).catch((err)=>{
       alert("Error adding note");
       console.log(err);
@@ -110,12 +107,12 @@ class App extends React.Component {
   }
   //Display Note clicked on right side.
   onNoteClick(note){
-    this.setState(function(prevState, props){
-      return{
-        currentNote: note
-      }
+    this.setState({
+        currentNote: note,
+        noteDisplayed: true,
     })
   }
+
   //Note Delete Function passed down to NoteList passed down to Note
   onNoteDelete(evt,delete_id){
     //stopPropagation to stop Note's onClick handler
@@ -123,6 +120,7 @@ class App extends React.Component {
     axios.delete('http://localhost:8000/notes/' + delete_id)
     .then((response)=>{
       let currentNote = this.state.currentNote;
+      let noteDisplayed = this.state.noteDisplayed;
       if(this.state.currentNote._id === delete_id){
         currentNote = {
           title: "",
@@ -130,6 +128,7 @@ class App extends React.Component {
           content: "",
           key: ""
         }
+        noteDisplayed = false;
       }
       this.setState(function(prevState, props){
         for(let i = prevState.notes.length-1; i >= 0 ; i--){
@@ -140,8 +139,9 @@ class App extends React.Component {
         }
         return{
           notes: prevState.notes,
-          displayedNotes: prevState.notes,
-          currentNote: currentNote
+          noteList: prevState.notes,
+          currentNote: currentNote,
+          noteDisplayed: noteDisplayed
         }
       })
     })
@@ -168,13 +168,13 @@ class App extends React.Component {
       }
     )
     this.setState({
-        displayedNotes: searchArray,
+        noteList: searchArray,
       })
   }
   //Used to cancel search and display all notes
   cancelSearch(){
     this.setState({
-      displayedNotes: this.state.notes,
+      noteList: this.state.notes,
     })
   }
 
@@ -187,11 +187,11 @@ class App extends React.Component {
           </div>
           <div className='note-area'>
             <SearchBar onNoteSearch={this.onNoteSearch} cancelSearch={this.cancelSearch}/>
-            <NoteList notes={this.state.displayedNotes} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
+            <NoteList notes={this.state.noteList} onNoteClick={this.onNoteClick} onNoteDelete={this.onNoteDelete}/>
             <AddNote onAdd={this.onNoteAdd} topics={this.state.topics}/>
           </div>
           <div className="note-view">
-            <NoteView currentNote={this.state.currentNote} onNoteChange={this.onNoteChange}/>
+            <NoteView currentNote={this.state.currentNote} noteDisplayed={this.state.noteDisplayed} onNoteChange={this.onNoteChange}/>
           </div>
         </div>
       </div>

@@ -46,4 +46,4 @@ const NOTES = [
 ]
 
 //Pass Notes and Topic into Application. Keeping data layer high up in tree.
-ReactDOM.render(<App initialNotes ={NOTES} initialTopics = {TOPICS}/>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
