@@ -32,9 +32,13 @@ class App extends React.Component {
   }
   componentDidMount(){
     axios.get('http://localhost:8000/notes', {port: 8000})
-    .then((response)=> this.setState(
-      {displayedNotes: response.data}
-    ))
+    .then((response)=> {
+      this.setState(
+      {
+        notes: response.data,
+        displayedNotes: response.data
+      }
+    )})
     .catch((err)=>console.log(err));
 
     axios.get('http://localhost:8000/topics', {port: 8000})
@@ -44,7 +48,6 @@ class App extends React.Component {
         topicArray.push(topic.topic);
       })
       this.setState({topics: topicArray})
-      console.log(topicArray)
     }
   )
     .catch((err)=>console.log(err))
@@ -78,16 +81,16 @@ class App extends React.Component {
       }).catch((err)=>{
         alert("error adding topic");
       })
-      // this.setState(function(prevState, props){
-      //   const newTopics = prevState.topics.concat(topic);
-      //   return {
-      //     topics: newTopics,
-      //   }
-      // })
     }
   }
   //Create a new note given title, user, and topic.
   onNoteAdd(username, title, textValue, selectedTopic){
+    axios.post('http://localhost:8000/notes', {
+      author: username,
+      title: title,
+      content: textValue,
+      topic: selectedTopic
+    })
     this.setState(function(prevState, props){
       const newArray = prevState.notes.concat({
         title: title,
@@ -112,26 +115,38 @@ class App extends React.Component {
     })
   }
   //Note Delete Function passed down to NoteList passed down to Note
-  onNoteDelete(index, evt){
+  onNoteDelete(evt,delete_id){
     //stopPropagation to stop Note's onClick handler
     evt.stopPropagation()
-    let currentNote = this.state.currentNote;
-    if(this.state.currentNote.key === this.state.notes[index].key){
-      currentNote = {
-        title: "",
-        author: "",
-        content: "",
-        key: ""
+    axios.delete('http://localhost:8000/notes/' + delete_id)
+    .then((response)=>{
+      let currentNote = this.state.currentNote;
+      if(this.state.currentNote._id === delete_id){
+        currentNote = {
+          title: "",
+          author: "",
+          content: "",
+          key: ""
+        }
       }
-    }
-    this.setState(function(prevState, props){
-      prevState.notes.splice(index,1)
-      return{
-        notes: prevState.notes,
-        displayedNotes: this.state.notes,
-        currentNote: currentNote
-      }
+      this.setState(function(prevState, props){
+        for(let i = prevState.notes.length-1; i >= 0 ; i--){
+          if(prevState.notes[i]._id === delete_id){
+            prevState.notes.splice(i,1);
+            break;
+          }
+        }
+        return{
+          notes: prevState.notes,
+          displayedNotes: prevState.notes,
+          currentNote: currentNote
+        }
+      })
     })
+    .catch((err)=>{
+      alert("something went wrong");
+    })
+
   }
   //Handles when notes are editted in the Note View.
   onNoteChange(event){
