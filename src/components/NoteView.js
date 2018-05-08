@@ -8,7 +8,7 @@ class NoteView extends Component {
     // }
   }
   render() {
-    const updateButton = this.props.noteDisplayed ? (<input type="submit" value="Update"/>) : (<div></div>)
+    const updateButton = this.props.noteDisplayed ? (<div className="update-button"><button onClick={(e)=>{this.props.onNoteUpdate(this.props.currentNote._id)}}>Update</button></div>) : (<div></div>)
     return (
       <div>
         <div className="note-title">{this.props.currentNote.title}</div>

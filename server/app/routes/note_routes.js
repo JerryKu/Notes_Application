@@ -24,6 +24,7 @@ module.exports = function(app, db){
       }
     })
   });
+
   app.delete('/notes/:id', (req, res) =>{
     const id = req.params.id;
     const details = {'_id': new ObjectID(id) };
@@ -38,7 +39,7 @@ module.exports = function(app, db){
   app.put('/notes/:id', (req, res)=>{
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    const note = { text: req.body.body, title: req.body.title };
+    const note = { title: req.body.title, author: req.body.author, content: req.body.content, topic: req.body.topic};
     db.collection('notes').update(details, note, (err, result)=>{
       if(err){
         res.send({'error': 'An error has occured'});

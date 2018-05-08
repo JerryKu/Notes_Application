@@ -17,6 +17,7 @@ class App extends React.Component {
     this.onNoteClick = this.onNoteClick.bind(this);
     this.onNoteDelete = this.onNoteDelete.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
+    this.onNoteUpdate = this.onNoteUpdate.bind(this);
     this.onNoteSearch = this.onNoteSearch.bind(this);
     this.cancelSearch = this.cancelSearch.bind(this);
     this.onTopicSelect = this.onTopicSelect.bind(this);
@@ -112,7 +113,21 @@ class App extends React.Component {
         noteDisplayed: true,
     })
   }
-
+  onNoteUpdate(note_id){
+    console.log("update!")
+    let body = {
+      author: this.state.currentNote.author,
+      content: this.state.currentNote.content,
+      title: this.state.currentNote.title,
+      topic: this.state.currentNote.topic
+    }
+    axios.put('http://localhost:8000/notes/' + note_id, body
+    ).then((response)=>{
+      alert("Note Successfully updated!");
+    }).catch((err)=>{
+      alert("Problem Updating Note");
+    })
+  }
   //Note Delete Function passed down to NoteList passed down to Note
   onNoteDelete(evt,delete_id){
     //stopPropagation to stop Note's onClick handler
@@ -152,6 +167,7 @@ class App extends React.Component {
   }
   //Handles when notes are editted in the Note View.
   onNoteChange(event){
+    event.stopPropagation()
     const update = event.target.value;
     this.setState(function(prevState, props){
       prevState.currentNote.content = update;
@@ -191,7 +207,7 @@ class App extends React.Component {
             <AddNote onAdd={this.onNoteAdd} topics={this.state.topics}/>
           </div>
           <div className="note-view">
-            <NoteView currentNote={this.state.currentNote} noteDisplayed={this.state.noteDisplayed} onNoteChange={this.onNoteChange}/>
+            <NoteView currentNote={this.state.currentNote} noteDisplayed={this.state.noteDisplayed} onNoteChange={this.onNoteChange} onNoteUpdate={this.onNoteUpdate}/>
           </div>
         </div>
       </div>
