@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import SearchBar from './components/SearchBar.js';
 import NoteList from './components/NoteList.js';
 import './App.css';
@@ -22,12 +23,15 @@ class App extends React.Component {
     this.onAddTopic = this.onAddTopic.bind(this);
     //initial state of application altered by setState()
     this.state = {
-      notes: props.initialNotes,
-      displayedNotes: props.initialNotes,
+      notes: [],
+      displayedNotes: [],
       topics: props.initialTopics,
       currentNote: {},
 
     }
+  }
+  componentDidMount(){
+    axios.get('/notes', ).then((response)=> this.setState({displayedNotes: response.data}))
   }
   //Clicking a topic displays all notes from a certain topic.
   onTopicSelect(topic){
@@ -128,7 +132,7 @@ class App extends React.Component {
       displayedNotes: this.state.notes,
     })
   }
-  
+
   render(){
     return(
       <div className='application'>
