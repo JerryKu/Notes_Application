@@ -90,21 +90,23 @@ class App extends React.Component {
       title: title,
       content: textValue,
       topic: selectedTopic
-    })
-    this.setState(function(prevState, props){
-      const newArray = prevState.notes.concat({
-        title: title,
-        author: username,
-        content: textValue,
-        topic: selectedTopic,
-        key:nextId
+    }).then((response)=>{
+      this.setState(function(prevState, props){
+        const newArray = prevState.notes.concat({
+          title: title,
+          author: username,
+          content: textValue,
+          topic: selectedTopic
+        })
+        return{
+          notes: newArray,
+          displayedNotes: newArray
+        }
       })
-      return{
-        notes: newArray,
-        displayedNotes: newArray
-      }
+    }).catch((err)=>{
+      alert("Error adding note");
+      console.log(err);
     })
-    nextId++;
   }
   //Display Note clicked on right side.
   onNoteClick(note){

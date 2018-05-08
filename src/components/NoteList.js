@@ -6,7 +6,11 @@ class NoteList extends Component {
     return (
       <div className="note-list">
         {this.props.notes.map(function(note, index){
-          return <div onClick={(e) => {this.props.onNoteClick(note)}} key={note._id}><Note key={note._id} title={note.title} content={note.content} author={note.author} onDelete={(evt) => {this.props.onNoteDelete(evt,note._id)}}/></div>
+          return (
+          <div key={note._id} onClick={(e) => {this.props.onNoteClick(note)}}>
+            <Note key={note._id} title={note.title} content={note.content} author={note.author} onDelete={(evt) => {this.props.onNoteDelete(evt,note._id)}}/>
+          </div>
+        )
         }.bind(this))}
       </div>
     );
