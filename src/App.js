@@ -25,13 +25,29 @@ class App extends React.Component {
     this.state = {
       notes: [],
       displayedNotes: [],
-      topics: props.initialTopics,
+      topics: [],
       currentNote: {},
 
     }
   }
   componentDidMount(){
-    axios.get('/notes', ).then((response)=> this.setState({displayedNotes: response.data}))
+    axios.get('http://localhost:8000/notes', {port: 8000})
+    .then((response)=> this.setState(
+      {displayedNotes: response.data}
+    ))
+    .catch((err)=>console.log(err));
+
+    axios.get('http://localhost:8000/topics', {port: 8000})
+    .then((response)=>{
+      let topicArray = [];
+      response.data.forEach((topic)=>{
+        topicArray.push(topic.topic);
+      })
+      this.setState({topics: topicArray})
+      console.log(topicArray)
+    }
+  )
+    .catch((err)=>console.log(err))
   }
   //Clicking a topic displays all notes from a certain topic.
   onTopicSelect(topic){
@@ -50,12 +66,24 @@ class App extends React.Component {
   //Create new topic.
   onAddTopic(topic){
     if(this.state.topics.indexOf(topic) === -1){
-      this.setState(function(prevState, props){
-        const newTopics = prevState.topics.concat(topic);
-        return {
-          topics: newTopics,
-        }
+      axios.post('http://localhost:8000/topics', {
+        topic: topic
+      }).then((response)=>{
+        this.setState(function(prevState, props){
+          const newTopics = prevState.topics.concat(topic);
+          return{
+            topics: newTopics,
+          }
+        })
+      }).catch((err)=>{
+        alert("error adding topic");
       })
+      // this.setState(function(prevState, props){
+      //   const newTopics = prevState.topics.concat(topic);
+      //   return {
+      //     topics: newTopics,
+      //   }
+      // })
     }
   }
   //Create a new note given title, user, and topic.

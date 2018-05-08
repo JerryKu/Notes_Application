@@ -1,6 +1,9 @@
 var ObjectID = require('mongodb').ObjectID;
+const bodyParser = require("body-parser");
 
 module.exports = function(app, db){
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
   app.get('/notes', (req, res)=>{
     db.collection('notes').find({}).toArray(function(err, result) {
       if(err){
@@ -47,6 +50,26 @@ module.exports = function(app, db){
   app.post('/notes', (req, res) => {
     const note = {title: req.body.title, author: req.body.author, content: req.body.content, topic: req.body.topic, key: req.body.key};
     db.collection('notes').insert(note, (err, result)=> {
+      if(err){
+        res.send({'error': 'An error has occured'});
+      }else{
+        res.send(result.ops[0]);
+      }
+    })
+  })
+  app.get('/topics', (req, res)=>{
+    db.collection('topics').find({}).toArray(function(err, result) {
+      if(err){
+        res.send({'error': 'An error has occured'});
+      }else{
+        res.send(result);
+      }
+    })
+  })
+  app.post('/topics', (req, res) => {
+    console.log(req)
+    const topic = {topic: req.body.topic};
+    db.collection('topics').insert(topic, (err, result)=> {
       if(err){
         res.send({'error': 'An error has occured'});
       }else{
